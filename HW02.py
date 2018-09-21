@@ -1,0 +1,107 @@
+#HW02 Random Walk
+#Programmer: Brittian Foster
+
+
+#Define Constants
+d = 1  # distance of one step
+N = 20  # total number of steps
+
+#Function of one dimensional random walk
+def Walk(n):  # n the number of times the person did random walks
+    j = 0
+    steps = [0] * N  # generate a empty vector for x steps
+    Pos_list = []
+    while j <= n:
+        Pos = 0  # initially the person is at x = 0
+        for i in range(N):
+            x = randint(0, 2)
+            if x == 0:
+                x = x - 1
+            steps[i] = x
+            Pos = Pos + d * steps[i]
+        Pos_list.append(Pos)
+        j = j + 1
+    return Pos_list
+
+#List of walk final positions
+W = Walk(5000)  # for n random walks
+
+#Counting the number of times x distance occurs
+x = linspace(-N, N, 21)
+x_count = []
+for i in range(N + 1):
+    c = W.count(2 * i - 20)
+    x_count.append(c)
+
+#Plotting x vs x_count
+figure()
+plot(x, x_count, label='Took 5000 steps')
+xlabel('Distance Walked (x)')
+ylabel('How many times x distance occured')
+title('Probability Distribution of a Random 20 Steps Walk')
+legend(loc='upper right')
+show()
+
+#Finding x^2
+n = int(N / 2 + 1)
+x2 = [0] * n
+for i in range(n):
+    x2[i] = (2 * i) ** 2
+
+#Counting the number of times x^2 distance occurs
+x2_count = []
+for i in range(N + 1):
+    W[i] = W[i] ** 2
+for j in range(n):
+    c = W.count((2 * j) ** 2)
+    x2_count.append(c)
+
+#Plotting x^2 vs x^2_count
+figure()
+plt.scatter(x2, x2_count, label='Took 5000 steps')
+xlabel('Squared of Distance Walked (x^2)')
+ylabel('How many times x^2 occured')
+title('Probability Distribution of x^2 of Random 20 Steps')
+legend(loc='upper right')
+show()
+
+#Programmer: Brittian Foster
+#A Two Dimensional Walk!
+#Function of two dimensional random walk
+def Walk_2D(n):  # n the number of times the person did random walks
+    j = 0
+    Posx_list = []
+    Posy_list = []
+    steps_x = [0] * N  # generate an empty list for x steps
+    steps_y = [0] * N  # generate an empty list for y steps
+    while j <= n:
+        Posx = 0  # initially the person is at x = 0
+        Posy = 0  # initially the person is at y = 0
+        for i in range(N):
+            x = randint(0, 2)
+            y = randint(0, 2)
+            if x == 0:
+                x = x - 1
+            if y == 0:
+                y = y - 1
+            steps_x[i] = x
+            steps_y[i] = y
+            Posx = Posx + d * steps_x[i]
+            Posy = Posy + d * steps_y[i]
+        Posx_list.append(Posx)
+        Posy_list.append(Posy)
+        j = j + 1
+    return (Posx_list, Posy_list)
+
+W2 = Walk_2D(500)
+x = W2[0]
+y = W2[1]
+
+#Plotting 2_D Random Walk
+figure()
+plt.scatter(x, y, alpha=0.1, label='Took 500 steps')
+xlabel('Distance Walked in the x ')
+ylabel('Distance Walked in the y')
+title('Distribution of Random 20 Steps 2-D Walk')
+legend(loc='upper right')
+show()
